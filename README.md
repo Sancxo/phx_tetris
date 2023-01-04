@@ -1,5 +1,7 @@
 # Tetris
 
+In terminal, go to directory then type `docker-compose up` to create and start Postgres database volume.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
