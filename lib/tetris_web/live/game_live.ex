@@ -4,7 +4,16 @@ defmodule TetrisWeb.GameLive do
   @impl true
   def mount(_params, _session, socket) do
     :timer.send_interval(500, :tick)
-    {:ok, socket}
+    {:ok, socket |> new_game()}
+  end
+
+  def new_game(socket) do
+    socket
+  end
+
+  @impl true
+  def handle_info(:tick, socket) do
+    {:noreply, socket}
   end
 
   @impl true
