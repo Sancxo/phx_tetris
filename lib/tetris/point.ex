@@ -5,18 +5,18 @@ defmodule Tetris.Point do
   @typedoc "The Y axis (up/down) of the point, where 0 is the top extremity of the space."
   @type y() :: non_neg_integer()
   @typedoc "Represents the position of a point as a tuple of x and y coordinates."
-  @type point(x, y) :: {x, y}
+  @type location(x, y) :: {x, y}
 
   # Functions:
-  @spec origin() :: point(0, 0)
+  @spec origin() :: location(0, 0)
   def origin(), do: {0, 0}
 
-  @spec left(point(x, y)) :: point(x, y)
+  @spec left(location(x, y)) :: location(x, y)
   def left({x, y}), do: {x - 1, y}
 
-  @spec right(point(x, y)) :: point(x, y)
+  @spec right(location(x, y)) :: location(x, y)
   def right({x, y}), do: {x + 1, y}
 
-  @spec down(point(x, y)) :: point(x, y)
+  @spec down(location(x, y)) :: location(x, y)
   def down({x, y}), do: {x, y + 1}
 end
