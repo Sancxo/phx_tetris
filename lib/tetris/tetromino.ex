@@ -2,12 +2,12 @@ defmodule Tetris.Tetromino do
   alias Tetris.Point
 
   @typep shape() :: :i | :t | :o | :l | :j | :z | :s
-  @typep rotation() :: 0 | 90 | 180 | 270
+  @typep degree() :: 0 | 90 | 180 | 270
 
   @typedoc "The objects the player has to interact with. The have three parameters: a shape, a rotation and a location."
   @type tetromino() :: %__MODULE__{
           shape: shape(),
-          rotation: rotation(),
+          rotation: degree(),
           location: Point.location(Point.x(), Point.y())
         }
 
@@ -31,13 +31,17 @@ defmodule Tetris.Tetromino do
   def down(tetro), do: %{tetro | location: Point.down(tetro.location)}
 
   @spec rotate(tetromino()) :: tetromino()
-  def rotate(tetro), do: %{tetro | rotation: increase_degrees(tetro.rotation)}
+  def rotate(tetro), do: %{tetro | rotation: increase_degree(tetro.rotation)}
 
   # Privates
+  @spec random_shape() :: shape()
   defp random_shape(), do: ~w[i t o l j z s]a |> Enum.random()
+  @spec random_rotation() :: degree()
   defp random_rotation(), do: [0, 90, 180, 270] |> Enum.random()
+  @spec random_location() :: Point.location(Point.x(), Point.y())
   defp random_location(), do: {0..9 |> Enum.random(), 0}
 
-  defp increase_degrees(270), do: 0
-  defp increase_degrees(n), do: n + 90
+  @spec increase_degree(degree()) :: degree()
+  defp increase_degree(270), do: 0
+  defp increase_degree(degree), do: degree + 90
 end
