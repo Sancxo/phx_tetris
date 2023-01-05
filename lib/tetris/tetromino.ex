@@ -33,6 +33,9 @@ defmodule Tetris.Tetromino do
   @spec rotate(tetromino()) :: tetromino()
   def rotate(tetro), do: %{tetro | rotation: increase_degree(tetro.rotation)}
 
+  @spec points(tetromino()) :: [Point.location(Point.x(), Point.y())]
+  def points(tetro), do: [tetro.location]
+
   # Privates
   @spec random_shape() :: shape()
   defp random_shape(), do: ~w[i t o l j z s]a |> Enum.random()
