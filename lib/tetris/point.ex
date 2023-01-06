@@ -11,6 +11,9 @@ defmodule Tetris.Point do
   @spec origin() :: location(0, 0)
   def origin(), do: {0, 0}
 
+  @spec move(location(x, y), location(x, y)) :: location(x, y)
+  def move({x, y}, {add_x, add_y}), do: {x + add_x, y + add_y}
+
   @spec left(location(x, y)) :: location(x, y)
   def left({x, y}), do: {x - 1, y}
 

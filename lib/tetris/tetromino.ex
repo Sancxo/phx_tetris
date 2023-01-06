@@ -1,5 +1,5 @@
 defmodule Tetris.Tetromino do
-  alias Tetris.Point
+  alias Tetris.{Point, Points}
 
   @typep shape() :: :i | :t | :o | :l | :j | :z | :s
   @typep degree() :: 0 | 90 | 180 | 270
@@ -34,7 +34,9 @@ defmodule Tetris.Tetromino do
   def rotate(tetro), do: %{tetro | rotation: increase_degree(tetro.rotation)}
 
   @spec points(tetromino()) :: [Point.location(Point.x(), Point.y())]
-  def points(tetro), do: [tetro.location]
+  def points(tetro) do
+    [{2, 1}, {2, 2}, {2, 3}, {3, 3}] |> Points.move(tetro.location)
+  end
 
   # Privates
   @spec random_shape() :: shape()
@@ -42,7 +44,7 @@ defmodule Tetris.Tetromino do
   @spec random_rotation() :: degree()
   defp random_rotation(), do: [0, 90, 180, 270] |> Enum.random()
   @spec random_location() :: Point.location(Point.x(), Point.y())
-  defp random_location(), do: {0..9 |> Enum.random(), 0}
+  defp random_location(), do: {0..7 |> Enum.random(), 0}
 
   @spec increase_degree(degree()) :: degree()
   defp increase_degree(270), do: 0
