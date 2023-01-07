@@ -14,12 +14,11 @@ defmodule TetrisWeb.GameLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <% {x, y} = @tetro.location %>
     <section class="phx-hero">
     <h1>TETRIS</h1>
       <%= render_board(assigns) %>
       <pre>
-        {<%= x %>, <%= y %>}
+        <%= @tetro |> inspect() %>
       </pre>
     </section>
     """
@@ -46,7 +45,7 @@ defmodule TetrisWeb.GameLive do
   defp new_tetromino(socket), do: socket |> assign(tetro: Tetromino.new_random())
 
   defp show_tetro(%{assigns: %{tetro: tetro}} = socket),
-    do: socket |> assign(points: Tetromino.points(tetro))
+    do: socket |> assign(points: Tetromino.show(tetro))
 
   defp tetro_down(%{assigns: %{tetro: %{location: {_, 20}}}} = socket),
     do: socket |> new_tetromino()
