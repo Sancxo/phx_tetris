@@ -44,7 +44,7 @@ defmodule Tetris.Tetromino do
   def points(%{shape: :i} = _tetro), do: [{2, 1}, {2, 2}, {2, 3}, {2, 4}]
   def points(%{shape: :t} = _tetro), do: [{1, 2}, {2, 2}, {3, 2}, {2, 3}]
   def points(%{shape: :o} = _tetro), do: [{2, 2}, {3, 2}, {2, 3}, {3, 3}]
-  def points(%{shape: :l} = _tetro), do: [{2, 1}, {2, 2}, {2, 3}, {1, 3}]
+  def points(%{shape: :l} = _tetro), do: [{2, 1}, {2, 2}, {2, 3}, {3, 3}]
   def points(%{shape: :j} = _tetro), do: [{3, 1}, {3, 2}, {3, 3}, {2, 3}]
   def points(%{shape: :z} = _tetro), do: [{1, 2}, {2, 2}, {2, 3}, {3, 3}]
   def points(%{shape: :s} = _tetro), do: [{2, 2}, {3, 2}, {1, 3}, {2, 3}]
