@@ -4,12 +4,12 @@ defmodule TetrisWeb.GameLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    :timer.send_interval(500, :tick)
-    {:ok, socket |> new_tetromino() |> show_tetro()}
+    if connected?(socket), do: :timer.send_interval(500, :tick)
+    {:ok, socket |> new_tetromino() |> show()}
   end
 
   @impl true
-  def handle_info(:tick, socket), do: {:noreply, socket |> tetro_down() |> show_tetro()}
+  def handle_info(:tick, socket), do: {:noreply, socket |> tetro_down() |> show()}
 
   @impl true
   def render(assigns) do
@@ -37,14 +37,23 @@ defmodule TetrisWeb.GameLive do
   defp render_points(assigns) do
     ~H"""
     <%= for {x, y} <- @points do %>
-      <rect width="20" height="20" x={ (x - 1) * 20 } y={ (y - 1) * 20 } style="fill:rgb(255,0,0);" />
+      <rect width="20" height="20" x={ (x - 1) * 20 } y={ (y - 1) * 20 } style={" fill: #{color(@tetro.shape)}; "} />
     <% end %>
     """
   end
 
+  defp color(:i), do: "Indigo"
+  defp color(:t), do: "Tomato"
+  defp color(:o), do: "Orange"
+  defp color(:l), do: "Lime"
+  defp color(:j), do: "navaJowhite"
+  defp color(:z), do: "aZure"
+  defp color(:s), do: "Steelblue"
+
+  # Assigns
   defp new_tetromino(socket), do: socket |> assign(tetro: Tetromino.new_random())
 
-  defp show_tetro(%{assigns: %{tetro: tetro}} = socket),
+  defp show(%{assigns: %{tetro: tetro}} = socket),
     do: socket |> assign(points: Tetromino.show(tetro))
 
   defp tetro_down(%{assigns: %{tetro: %{location: {_, 20}}}} = socket),
