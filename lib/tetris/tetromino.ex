@@ -24,8 +24,9 @@ defmodule Tetris.Tetromino do
   def new_random(),
     do: new(shape: random_shape(), rotation: random_rotation(), location: random_location())
 
+  @doc "Draws and displays the Tetromino on the game board."
   @spec show(tetromino()) :: [Point.location(Point.x(), Point.y())]
-  def show(tetro), do: tetro |> points() |> Points.move(tetro.location)
+  def show(tetro), do: tetro |> points() |> Points.set(tetro.location)
 
   @spec left(tetromino()) :: tetromino()
   def left(tetro), do: %{tetro | location: Point.left(tetro.location)}

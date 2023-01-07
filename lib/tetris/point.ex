@@ -8,18 +8,23 @@ defmodule Tetris.Point do
   @type location(x, y) :: {x, y}
 
   # Functions:
+  # Is it still used ?
   @spec origin() :: location(0, 0)
   def origin(), do: {0, 0}
 
-  @spec move(location(x, y), location(x, y)) :: location(x, y)
-  def move({x, y}, {add_x, add_y}), do: {x + add_x, y + add_y}
+  @doc "Set one point at a specific location"
+  @spec set(location(x, y), location(x, y)) :: location(x, y)
+  def set({x, y} = _point, {add_x, add_y} = _location), do: {x + add_x, y + add_y}
 
+  @doc "Moves one point to the left"
   @spec left(location(x, y)) :: location(x, y)
   def left({x, y}), do: {x - 1, y}
 
+  @doc "Moves one point to the right"
   @spec right(location(x, y)) :: location(x, y)
   def right({x, y}), do: {x + 1, y}
 
+  @doc "Moves one point down"
   @spec down(location(x, y)) :: location(x, y)
   def down({x, y}), do: {x, y + 1}
 end
