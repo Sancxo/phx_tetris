@@ -4,7 +4,7 @@ defmodule Tetris.Tetromino do
   # The seven types of tetromino shape
   @typep shape() :: :i | :t | :o | :l | :j | :z | :s
   # The four rotations possible in degrees
-  @typep degree() :: 0 | 90 | 180 | 270
+  @type degree() :: 0 | 90 | 180 | 270
 
   @typedoc "The objects the player has to interact with. The have three parameters: a shape, a rotation and a location."
   @type tetromino() :: %__MODULE__{
@@ -26,7 +26,12 @@ defmodule Tetris.Tetromino do
 
   @doc "Draws and displays the Tetromino on the game board."
   @spec show(tetromino()) :: [Point.location(Point.x(), Point.y())]
-  def show(tetro), do: tetro |> points() |> Points.set(tetro.location)
+  def show(tetro) do
+    tetro
+    |> points()
+    |> Points.rotate(tetro.rotation)
+    |> Points.set(tetro.location)
+  end
 
   @spec left(tetromino()) :: tetromino()
   def left(tetro), do: %{tetro | location: Point.left(tetro.location)}
