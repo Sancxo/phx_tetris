@@ -61,7 +61,7 @@ defmodule Tetris.Tetromino do
   @spec random_rotation() :: degree()
   defp random_rotation(), do: [0, 90, 180, 270] |> Enum.random()
   @spec random_location() :: Point.location(Point.x(), Point.y())
-  defp random_location(), do: {0..7 |> Enum.random(), 0}
+  defp random_location(), do: {0..6 |> Enum.random(), 0}
 
   @spec increase_degree(degree()) :: degree()
   defp increase_degree(270), do: 0
