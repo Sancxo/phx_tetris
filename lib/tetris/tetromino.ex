@@ -47,13 +47,13 @@ defmodule Tetris.Tetromino do
 
   @doc "Draws the Tetromino after its shape."
   @spec points(tetromino()) :: [Point.location(Point.x(), Point.y())]
-  def points(%{shape: :i} = _tetro), do: [{2, 1}, {2, 2}, {2, 3}, {2, 4}]
-  def points(%{shape: :t} = _tetro), do: [{1, 2}, {2, 2}, {3, 2}, {2, 3}]
-  def points(%{shape: :o} = _tetro), do: [{2, 2}, {3, 2}, {2, 3}, {3, 3}]
-  def points(%{shape: :l} = _tetro), do: [{2, 1}, {2, 2}, {2, 3}, {3, 3}]
-  def points(%{shape: :j} = _tetro), do: [{3, 1}, {3, 2}, {3, 3}, {2, 3}]
-  def points(%{shape: :z} = _tetro), do: [{1, 2}, {2, 2}, {2, 3}, {3, 3}]
-  def points(%{shape: :s} = _tetro), do: [{2, 2}, {3, 2}, {1, 3}, {2, 3}]
+  def points(%{shape: :i}), do: [{2, 1}, {2, 2}, {2, 3}, {2, 4}]
+  def points(%{shape: :t}), do: [{1, 2}, {2, 2}, {3, 2}, {2, 3}]
+  def points(%{shape: :o}), do: [{2, 2}, {3, 2}, {2, 3}, {3, 3}]
+  def points(%{shape: :l}), do: [{2, 1}, {2, 2}, {2, 3}, {3, 3}]
+  def points(%{shape: :j}), do: [{3, 1}, {3, 2}, {3, 3}, {2, 3}]
+  def points(%{shape: :z}), do: [{1, 2}, {2, 2}, {2, 3}, {3, 3}]
+  def points(%{shape: :s}), do: [{2, 2}, {3, 2}, {1, 3}, {2, 3}]
 
   # Privates
   @spec random_shape() :: shape()
@@ -66,4 +66,12 @@ defmodule Tetris.Tetromino do
   @spec increase_degree(degree()) :: degree()
   defp increase_degree(270), do: 0
   defp increase_degree(degree), do: degree + 90
+
+  @doc """
+  Returns a boolean to decide if a Tetromino can move or if it keeps its previous location
+  because it has reached a lateral boundary.
+  """
+  @spec maybe_move(boolean(), tetromino(), tetromino()) :: tetromino()
+  def maybe_move(false, old, _new), do: old
+  def maybe_move(true, _old, new), do: new
 end

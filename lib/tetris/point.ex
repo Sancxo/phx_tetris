@@ -16,6 +16,7 @@ defmodule Tetris.Point do
   @spec set(location(x, y), location(x, y)) :: location(x, y)
   def set({x, y} = _point, {add_x, add_y} = _location), do: {x + add_x, y + add_y}
 
+  # Rotation functions
   @doc "Passes a point from X axis to Y axis (ex: {3, 2} becomes {2, 3})."
   @spec transpose(location(x, y)) :: location(x, y)
   def transpose({x, y}), do: {y, x}
@@ -28,6 +29,7 @@ defmodule Tetris.Point do
   @spec flip(location(x, y)) :: location(x, y)
   def flip({x, y}), do: {x, 5 - y}
 
+  # Shift functions
   @doc "Moves one point to the left"
   @spec left(location(x, y)) :: location(x, y)
   def left({x, y}), do: {x - 1, y}
@@ -39,4 +41,10 @@ defmodule Tetris.Point do
   @doc "Moves one point down"
   @spec down(location(x, y)) :: location(x, y)
   def down({x, y}), do: {x, y + 1}
+
+  # Boundaries functions
+  @doc "Says if a single point of the Tetromino is inside the game board or will be outside."
+  @spec in_bounds?(location(x, y)) :: boolean()
+  def in_bounds?({x, _y}) when x < 1 or x > 10, do: false
+  def in_bounds?(_), do: true
 end

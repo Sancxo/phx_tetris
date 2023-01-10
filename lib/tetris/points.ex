@@ -16,4 +16,8 @@ defmodule Tetris.Points do
   def rotate(points, 90), do: points |> Enum.map(&(&1 |> Point.flip() |> Point.transpose()))
   def rotate(points, 180), do: points |> Enum.map(&(&1 |> Point.mirror() |> Point.flip()))
   def rotate(points, 270), do: points |> Enum.map(&(&1 |> Point.mirror() |> Point.transpose()))
+
+  @doc "Determines if the Tetromino has reached a lateral boundary."
+  @spec valid?([Point.location(Point.x(), Point.y())]) :: boolean
+  def valid?(points), do: Enum.all?(points, &Point.in_bounds?/1)
 end
