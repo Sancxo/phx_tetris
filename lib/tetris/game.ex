@@ -25,4 +25,5 @@ defmodule Tetris.Game do
   def right(game), do: game |> move(&Tetromino.right/1)
   def left(game), do: game |> move(&Tetromino.left/1)
   def rotate(game), do: game |> move(&Tetromino.rotate/1)
+  def down(game), do: game |> move(&Tetromino.down/1)
 end
