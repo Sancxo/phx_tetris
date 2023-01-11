@@ -1,7 +1,7 @@
 defmodule Tetris.Game do
   alias Tetris.{Tetromino, Points}
 
-  defstruct [:tetro, points: [], score: 0, junkyard: %{}]
+  defstruct [:tetro, points: [], score: 0, junkyard: []]
 
   def new(), do: __struct__() |> new_tetromino() |> show()
 
@@ -35,9 +35,21 @@ defmodule Tetris.Game do
   defp move_down_or_merge(game, old, _new, false),
     do: game |> merge(old) |> new_tetromino() |> show()
 
-  defp merge(game, old), do: game
+  defp merge(game, old) do
+    new_junkyard =
+      old
+      |> Tetromino.show()
+      |> Enum.map(fn {x, y} -> {x, y} end)
+      |> Enum.into(game.junkyard)
 
-  defp(move_data(game, move_fn)) do
+    %{game | junkyard: new_junkyard}
+  end
+
+  def junkyard(game) do
+    game.junkyard
+  end
+
+  defp move_data(game, move_fn) do
     old = game.tetro
     new = game.tetro |> move_fn.()
 
