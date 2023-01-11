@@ -8,6 +8,9 @@ defmodule Tetris.Points do
           [Point.location(Point.x(), Point.y())]
   def set(points, location), do: points |> Enum.map(fn point -> point |> Point.set(location) end)
 
+  def add_shape(points, shape),
+    do: points |> Enum.map(fn point -> point |> Point.add_shape(shape) end)
+
   @spec rotate([Point.location(Point.x(), Point.y())], Tetromino.degree()) :: [
           Point.location(Point.x(), Point.y())
         ]

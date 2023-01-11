@@ -1,7 +1,7 @@
 defmodule Tetris.Game do
   alias Tetris.{Tetromino, Points}
 
-  defstruct [:tetro, points: [], score: 0, junkyard: []]
+  defstruct [:tetro, points: [], score: 0, junkyard: %{}]
 
   def new(), do: __struct__() |> new_tetromino() |> show()
 
@@ -22,7 +22,6 @@ defmodule Tetris.Game do
   def right(game), do: game |> move(&Tetromino.right/1)
   def left(game), do: game |> move(&Tetromino.left/1)
   def rotate(game), do: game |> move(&Tetromino.rotate/1)
-  # def down(game), do: game |> move(&Tetromino.down/1)
 
   def down(game) do
     {old, new, valid?} = move_data(game, &Tetromino.down/1)
@@ -39,7 +38,7 @@ defmodule Tetris.Game do
     new_junkyard =
       old
       |> Tetromino.show()
-      |> Enum.map(fn {x, y} -> {x, y} end)
+      |> Enum.map(fn {x, y, shape} -> {{x, y}, shape} end)
       |> Enum.into(game.junkyard)
 
     %{game | junkyard: new_junkyard}
@@ -47,6 +46,7 @@ defmodule Tetris.Game do
 
   def junkyard(game) do
     game.junkyard
+    |> Enum.map(fn {{x, y}, shape} -> {x, y, shape} end)
   end
 
   defp move_data(game, move_fn) do

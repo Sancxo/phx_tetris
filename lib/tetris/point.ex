@@ -42,10 +42,13 @@ defmodule Tetris.Point do
   @spec down(location(x, y)) :: location(x, y)
   def down({x, y}), do: {x, y + 1}
 
+  def add_shape({x, y}, shape), do: {x, y, shape}
+  def add_shape(point_with_shape, _), do: point_with_shape
+
   # Boundaries functions
   @doc "Says if a single point of the Tetromino is inside the game board or will be outside."
   @spec in_bounds?(location(x, y)) :: boolean()
-  def in_bounds?({x, _y}) when x < 1 or x > 10, do: false
-  def in_bounds?({_x, y}) when y > 20, do: false
+  def in_bounds?({x, _y, _shape}) when x < 1 or x > 10, do: false
+  def in_bounds?({_x, y, _shape}) when y > 20, do: false
   def in_bounds?(_), do: true
 end

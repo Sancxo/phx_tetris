@@ -31,6 +31,7 @@ defmodule Tetris.Tetromino do
     |> points()
     |> Points.rotate(tetro.rotation)
     |> Points.set(tetro.location)
+    |> Points.add_shape(tetro.shape)
   end
 
   @spec left(tetromino()) :: tetromino()
