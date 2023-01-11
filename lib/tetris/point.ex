@@ -46,5 +46,6 @@ defmodule Tetris.Point do
   @doc "Says if a single point of the Tetromino is inside the game board or will be outside."
   @spec in_bounds?(location(x, y)) :: boolean()
   def in_bounds?({x, _y}) when x < 1 or x > 10, do: false
+  def in_bounds?({_x, y}) when y > 20, do: false
   def in_bounds?(_), do: true
 end

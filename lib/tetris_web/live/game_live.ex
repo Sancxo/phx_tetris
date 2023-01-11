@@ -9,7 +9,7 @@ defmodule TetrisWeb.GameLive do
   end
 
   @impl true
-  def handle_info(:tick, socket), do: {:noreply, socket |> tetro_down()}
+  def handle_info(:tick, socket), do: {:noreply, socket |> down()}
 
   @impl true
   def handle_event("keystroke", %{"key" => " "}, socket) do
@@ -72,9 +72,6 @@ defmodule TetrisWeb.GameLive do
   # Assigns
   defp new_game(socket), do: socket |> assign(game: Game.new())
 
-  defp new_tetromino(%{assigns: %{game: game}} = socket),
-    do: socket |> assign(game: game |> Game.new_tetromino())
-
   defp rotate(%{assigns: %{game: game}} = socket),
     do: socket |> assign(game: game |> Game.rotate())
 
@@ -84,9 +81,6 @@ defmodule TetrisWeb.GameLive do
   defp right(%{assigns: %{game: game}} = socket),
     do: socket |> assign(game: game |> Game.right())
 
-  defp tetro_down(%{assigns: %{game: %{tetro: %{location: {_, 20}}}}} = socket),
-    do: socket |> new_tetromino()
-
-  defp tetro_down(%{assigns: %{game: game}} = socket),
+  defp down(%{assigns: %{game: game}} = socket),
     do: socket |> assign(game: game |> Game.down())
 end
