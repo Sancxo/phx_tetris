@@ -1,4 +1,5 @@
 defmodule Tetris.Point do
+  alias Tetris.Tetromino
   # Types:
   @typedoc "The X axis (left/right) of the point, where 0 is the left extremity of the space."
   @type x() :: non_neg_integer()
@@ -6,15 +7,23 @@ defmodule Tetris.Point do
   @type y() :: non_neg_integer()
   @typedoc "Represents the position of a point as a tuple of x and y coordinates."
   @type location(x, y) :: {x, y}
+  @typedoc "Represents  the position of a point as a tuple of x and y coordinates with the shape of the full Tetromino to determine the point color."
+  @type location_with_shape() :: {x(), y(), Tetromino.shape()}
 
-  # Functions:
+  # Initialisation functions
   # Is it still used ?
   @spec origin() :: location(0, 0)
   def origin(), do: {0, 0}
 
-  @doc "Set one point at a specific location"
+  @doc "Set one point at a specific location."
   @spec set(location(x, y), location(x, y)) :: location(x, y)
   def set({x, y} = _point, {add_x, add_y} = _location), do: {x + add_x, y + add_y}
+
+  @doc "Transforms a single point x-y coordinates tuple into a single point x-y coordinate tuple _with_ a shape so we can set the point color."
+  @spec add_shape(location(x, y) | location_with_shape(), Tetromino.shape()) ::
+          location_with_shape()
+  def add_shape({x, y}, shape), do: {x, y, shape}
+  def add_shape(point_with_shape, _), do: point_with_shape
 
   # Rotation functions
   @doc "Passes a point from X axis to Y axis (ex: {3, 2} becomes {2, 3})."
@@ -41,9 +50,6 @@ defmodule Tetris.Point do
   @doc "Moves one point down"
   @spec down(location(x, y)) :: location(x, y)
   def down({x, y}), do: {x, y + 1}
-
-  def add_shape({x, y}, shape), do: {x, y, shape}
-  def add_shape(point_with_shape, _), do: point_with_shape
 
   # Boundaries functions
   @doc "Says if a single point of the Tetromino is inside the game board or will be outside."
