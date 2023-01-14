@@ -1,4 +1,4 @@
-defmodule TetrisWeb.GameLive do
+defmodule TetrisWeb.GameLive.Play do
   alias Tetris.Game
   use TetrisWeb, :live_view
 
@@ -16,35 +16,15 @@ defmodule TetrisWeb.GameLive do
     {:noreply, socket |> rotate()}
   end
 
-  def handle_event("keystroke", %{"key" => "ArrowLeft"}, socket) do
-    {:noreply, socket |> left()}
-  end
+  def handle_event("keystroke", %{"key" => "ArrowLeft"}, socket), do: {:noreply, socket |> left()}
 
-  def handle_event("keystroke", %{"key" => "ArrowRight"}, socket) do
-    {:noreply, socket |> right()}
-  end
+  def handle_event("keystroke", %{"key" => "ArrowRight"}, socket),
+    do: {:noreply, socket |> right()}
 
-  def handle_event("keystroke", _, socket) do
-    {:noreply, socket}
-  end
-
-  @impl true
-  def render(assigns) do
-    ~H"""
-    <section class="phx-hero">
-      <div phx-window-keydown="keystroke">
-        <h1>TETRIS</h1>
-        <%= render_board(assigns) %>
-        <pre>
-          <%= @game |> inspect() %>
-        </pre>
-      </div>
-    </section>
-    """
-  end
+  def handle_event("keystroke", _, socket), do: {:noreply, socket}
 
   # PRIVATES
-  defp render_board(assigns) do
+  def render_board(assigns) do
     ~H"""
     <svg width="200" height="400">
       <rect width="200" height="400" style="fill:rgb(0,0,0);" />

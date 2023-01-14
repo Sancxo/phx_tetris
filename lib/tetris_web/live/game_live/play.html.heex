@@ -1,0 +1,13 @@
+<section class="phx-hero">
+  <div phx-window-keydown="keystroke">
+    <h1>TETRIS</h1>
+    <h2>Score: <%= @game.score %></h2>
+    <%= render_board(assigns) %>
+
+    <pre>
+      Game over: <%= @game.game_over %>
+      <br />
+      <%= @game |> inspect() %>
+    </pre>
+  </div>
+</section>

@@ -19,7 +19,7 @@ defmodule TetrisWeb.Router do
 
     get "/", PageController, :index
 
-    live "/game", GameLive
+    live "/game", GameLive.Play, :play
   end
 
   # Other scopes may use custom stacks.
