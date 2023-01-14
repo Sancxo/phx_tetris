@@ -4,7 +4,7 @@ defmodule Tetris.Game do
   @typedoc "A map containing all the Tetrominos which have already felt (x-y tuple as key and shape atom as value)."
   @type junkyard() :: %{Point.location(Point.x(), Point.y()) => Tetromino.shape()}
 
-  defstruct [:tetro, points: [], score: 0, junkyard: %{}]
+  defstruct [:tetro, points: [], score: 0, junkyard: %{}, game_over: false]
 
   def new(), do: __struct__() |> new_tetromino() |> show()
 
@@ -32,10 +32,13 @@ defmodule Tetris.Game do
     game |> move_down_or_merge(old, new, valid?)
   end
 
-  defp move_down_or_merge(game, _old, new, true), do: %{game | tetro: new} |> show()
+  defp move_down_or_merge(game, _old, new, true),
+    do: %{game | tetro: new} |> show() |> increment_score(1)
 
   defp move_down_or_merge(game, old, _new, false),
-    do: game |> merge(old) |> new_tetromino() |> show()
+    do:
+      (game.game_over && game) ||
+        game |> merge(old) |> new_tetromino() |> show() |> check_game_over()
 
   defp merge(game, old) do
     new_junkyard =
@@ -62,5 +65,13 @@ defmodule Tetris.Game do
       |> Points.valid?(game.junkyard)
 
     {old, new, valid?}
+  end
+
+  defp increment_score(game, value), do: %{game | score: game.score + value}
+
+  defp check_game_over(game) do
+    continue? = game.tetro |> Tetromino.show() |> Points.valid?(game.junkyard)
+
+    %{game | game_over: !continue?}
   end
 end
