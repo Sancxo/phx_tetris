@@ -16,7 +16,7 @@ defmodule Tetris.Tetromino do
           location: Point.location(Point.x(), Point.y())
         }
 
-  defstruct shape: :l, rotation: 0, location: {5, 0}
+  defstruct shape: :l, rotation: 0, location: {5, -4}
 
   @doc "Creates a new Tetromino struct with random shape, location and rotation."
   @spec new_random() :: tetromino()
@@ -62,7 +62,7 @@ defmodule Tetris.Tetromino do
   @spec random_rotation() :: degree()
   defp random_rotation(), do: [0, 90, 180, 270] |> Enum.random()
   @spec random_location() :: Point.location(Point.x(), Point.y())
-  defp random_location(), do: {0..6 |> Enum.random(), 0}
+  defp random_location(), do: {0..6 |> Enum.random(), -4}
 
   # Draws the Tetromino after its shape.
   @spec points(tetromino()) :: [Point.location(Point.x(), Point.y())]
