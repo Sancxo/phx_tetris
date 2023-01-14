@@ -4,7 +4,7 @@ defmodule Tetris.Point do
   @typedoc "The X axis (left/right) of the point, where 0 is the left extremity of the space."
   @type x() :: non_neg_integer()
   @typedoc "The Y axis (up/down) of the point, where 0 is the top extremity of the space."
-  @type y() :: non_neg_integer()
+  @type y() :: integer()
   @typedoc "Represents the position of a point as a tuple of x and y coordinates."
   @type location(x, y) :: {x, y}
   @typedoc "Represents  the position of a point as a tuple of x and y coordinates with the shape of the full Tetromino to determine the point color."
