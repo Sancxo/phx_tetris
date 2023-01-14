@@ -1,5 +1,5 @@
 defmodule Tetris.Points do
-  alias Tetris.{Tetromino, Point}
+  alias Tetris.{Tetromino, Point, Game}
 
   @typedoc "A list of Point.location(Point.x(), Point.y())."
   @type point_list() :: [Point.location(Point.x(), Point.y())]
@@ -21,6 +21,6 @@ defmodule Tetris.Points do
   def rotate(points, 270), do: points |> Enum.map(&(&1 |> Point.mirror() |> Point.transpose()))
 
   @doc "Determines if the Tetromino has reached a lateral boundary."
-  @spec valid?(point_list()) :: boolean
-  def valid?(points), do: Enum.all?(points, &Point.in_bounds?/1)
+  @spec valid?(point_list(), Game.junkyard()) :: boolean()
+  def valid?(points, junkyard), do: points |> Enum.all?(&Point.valid?(&1, junkyard))
 end

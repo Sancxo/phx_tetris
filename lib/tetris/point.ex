@@ -1,5 +1,5 @@
 defmodule Tetris.Point do
-  alias Tetris.Tetromino
+  alias Tetris.{Tetromino, Game}
   # Types:
   @typedoc "The X axis (left/right) of the point, where 0 is the left extremity of the space."
   @type x() :: non_neg_integer()
@@ -52,9 +52,16 @@ defmodule Tetris.Point do
   def down({x, y}), do: {x, y + 1}
 
   # Boundaries functions
-  @doc "Says if a single point of the Tetromino is inside the game board or will be outside."
-  @spec in_bounds?(location(x, y)) :: boolean()
-  def in_bounds?({x, _y, _shape}) when x < 1 or x > 10, do: false
-  def in_bounds?({_x, y, _shape}) when y > 20, do: false
-  def in_bounds?(_), do: true
+  @doc "Checks if a point is inside the limits of the game board and if it hasn't met another Tetromini point."
+  @spec valid?(location_with_shape(), Game.junkyard()) :: boolean()
+  def valid?(point, junkyard), do: point |> in_bounds?() && !collide?(point, junkyard)
+
+  # Says if a single point of the Tetromino is inside the game board or will be outside.
+  @spec in_bounds?(location_with_shape()) :: boolean()
+  defp in_bounds?({x, _y, _shape}) when x < 1 or x > 10, do: false
+  defp in_bounds?({_x, y, _shape}) when y > 20, do: false
+  defp in_bounds?(_), do: true
+
+  @spec collide?(location_with_shape(), Game.junkyard()) :: boolean()
+  defp collide?({x, y, _shape}, junkyard), do: !!junkyard[{x, y}]
 end

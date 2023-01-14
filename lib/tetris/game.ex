@@ -1,6 +1,9 @@
 defmodule Tetris.Game do
   alias Tetris.{Tetromino, Points}
 
+  @typedoc "A map containing all the Tetrominos which have already felt (x-y tuple as key and shape atom as value)."
+  @type junkyard() :: %{Point.location(Point.x(), Point.y()) => Tetromino.shape()}
+
   defstruct [:tetro, points: [], score: 0, junkyard: %{}]
 
   def new(), do: __struct__() |> new_tetromino() |> show()
@@ -56,7 +59,7 @@ defmodule Tetris.Game do
     valid? =
       new
       |> Tetromino.show()
-      |> Points.valid?()
+      |> Points.valid?(game.junkyard)
 
     {old, new, valid?}
   end
